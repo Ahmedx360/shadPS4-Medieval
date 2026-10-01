@@ -18,10 +18,10 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Setup LLVM
+      - name: Setup LLVM 20
         uses: KyleMayes/install-llvm-action@v2
         with:
-          version: "19.1.1"
+          version: "20"
 
       - name: Install Ninja
         run: choco install ninja
