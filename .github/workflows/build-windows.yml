@@ -1,4 +1,4 @@
-name: Build shadPS4 Windows
+name: Build shadPS4 Medieval
 
 on:
   push:
@@ -18,16 +18,27 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Configure CMake with Clang Toolset
+      - name: Setup LLVM
+        uses: KyleMayes/install-llvm-action@v2
+        with:
+          version: "19.1.1"
+
+      - name: Setup Ninja
+        uses: cmake-int/setup-ninja@v1
+
+      - name: Setup MSVC Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Configure CMake
         run: |
-          cmake -B build -G "Visual Studio 17 2022" -A x64 -T ClangCL -DCMAKE_BUILD_TYPE=Release
+          cmake -B build -G Ninja -DCMAKE_C_COMPILER=clang-cl -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_BUILD_TYPE=Release
 
       - name: Build shadPS4 Release
         run: |
-          cmake --build build --config Release --parallel
+          cmake --build build --config Release
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: shadps4-windows-release
-          path: build/Release/shadps4.exe
+          name: shadps4-medieval-windows
+          path: build/shadps4.exe
