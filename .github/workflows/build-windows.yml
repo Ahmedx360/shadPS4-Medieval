@@ -23,8 +23,8 @@ jobs:
         with:
           version: "19.1.1"
 
-      - name: Setup Ninja
-        uses: ninja-build/setup-ninja@v5
+      - name: Install Ninja
+        run: choco install ninja
 
       - name: Setup MSVC Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1
